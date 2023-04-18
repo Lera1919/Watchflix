@@ -1,11 +1,10 @@
-import Header from "../Components/Header"
-import Poster from "../Components/Poster"
+import Poster from "../Components/Poster";
 
 export default function Home() {
     return (
         <div>
-        <Poster/>
-       <h1 className="flex justify-center items-center">Home</h1>
+            <Poster/>
+            <h1 className="flex justify-center items-center"></h1>
         </div>
-        )
-    }
+    )
+}
