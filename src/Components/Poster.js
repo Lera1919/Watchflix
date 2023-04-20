@@ -66,7 +66,7 @@ export default function Poster() {
     return (
         <div className="h-screen bg-center bg-cover items-end" style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${movies[index].backdrop_path}")`}}>
             <div className='h-screen bg-gradient-to-b from-[#000000b5] from-10% via-transparent via-50% to-black to-80%'>
-                <div className='max-w-screen-2xl mx-auto flex flex-col h-screen justify-between'>
+                <div className='max-w-screen-xl mx-auto flex flex-col h-screen justify-between'>
 
                     <div className='mt-28'>
                         <div className=''>
@@ -92,7 +92,7 @@ export default function Poster() {
                                 </div>
                             </div>
 
-                            <PosterVideo movie={movies[index]}/>
+                            <PosterVideo movieId={movies[index].id}/>
                             
                         </div>
                     </div>
