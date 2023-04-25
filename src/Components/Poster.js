@@ -3,20 +3,15 @@ import PosterCard from "./PosterCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
-// Import Swiper styles
 import "swiper/css";
-// import "swiper/css/pagination";
 import "swiper/css/navigation";
 import PosterVideo from "./PosterVideo";
 
 export default function Poster() {
-
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     const [index, setIndex] = useState(0);
-    const [video, setVideo] = useState([]);
-
 
     useEffect(() => {
         const liveTimeMovies = localStorage.getItem("popularTimestamp");
@@ -52,9 +47,7 @@ export default function Poster() {
             setIsLoading(false);
         }
 
-      }, [])
-
-  
+    }, [])
 
     if (isLoading) return(<h1>Loading ...</h1>)
     if (error !== null) return(<h1>ERROR</h1>)
@@ -62,11 +55,10 @@ export default function Poster() {
     const handler = (index) => {
         setIndex(index);
     }
-
     return (
         <div className="h-screen bg-center bg-cover items-end" style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${movies[index].backdrop_path}")`}}>
             <div className='h-screen bg-gradient-to-b from-[#000000b5] from-10% via-transparent via-50% to-black to-80%'>
-                <div className='max-w-screen-xl mx-auto flex flex-col h-screen justify-between'>
+                <div className='max-w-screen-2xl mx-auto flex flex-col h-screen justify-between'>
 
                     <div className='mt-28'>
                         <div className=''>
@@ -97,46 +89,46 @@ export default function Poster() {
                         </div>
                     </div>
 
-                    {/* <div className='flex'> */}
-                    <Swiper
-                        slidesPerView={4}
-                        spaceBetween={30}
-                        grabCursor={true}
-                        navigation={true}
-                        modules={[Navigation]}
-                        pagination={false}
-                        className="mx-auto flex flex-row relative w-full p-6"
-                        breakpoints={{
-                            320: {
-                              slidesPerView: 1,
-                              spaceBetween: 12,
-                            },
-                            640: {
-                              slidesPerView: 2,
-                              spaceBetween: 12,
-                            },
-                            1024: {
-                              slidesPerView: 3,
-                              spaceBetween: 16,
-                            },
-                            1336: {
-                              slidesPerView: 4,
-                              spaceBetween: 30,
-                            },
-                          }}
-                    >
-                        {movies.map((movie, index) => (
-                            <SwiperSlide key={movie.id}>
-                                <PosterCard movie={movie} index={index} handler = {handler}/>
-                            </SwiperSlide> 
-                        ))}
+                    <div className=''>
+                        <div className='text-4xl mb-6'>Now Popular:</div>
+                        <Swiper
+                            slidesPerView={4}
+                            spaceBetween={30}
+                            grabCursor={true}
+                            navigation={true}
+                            modules={[Navigation]}
+                            pagination={false}
+                            className="mx-auto flex flex-row relative w-full p-6"
+                            breakpoints={{
+                                320: {
+                                slidesPerView: 1,
+                                spaceBetween: 12,
+                                },
+                                640: {
+                                slidesPerView: 2,
+                                spaceBetween: 12,
+                                },
+                                1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 16,
+                                },
+                                1336: {
+                                slidesPerView: 4,
+                                spaceBetween: 30,
+                                },
+                            }}
+                        >
+                            {movies.map((movie, index) => (
+                                <SwiperSlide key={movie.id}>
+                                    <PosterCard movie={movie} index={index} handler={handler}/>
+                                </SwiperSlide>
+                            ))}
 
-                    </Swiper>
-                    {/* </div> */}
+                        </Swiper>
+                    </div>
 
                 </div>
             </div>
-            
         </div>
     )
 }
