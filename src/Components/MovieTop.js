@@ -6,7 +6,6 @@ export default function MovieTop() {
 
     const [movies, setMovies] = useState([])
     const [genres, setGenres] = useState([])
-
     const [isLoadingMovies, setIsLoadingMovies] = useState(true)
     const [isLoadingGenres, setIsLoadingGenres] = useState(true)
 
@@ -27,43 +26,37 @@ export default function MovieTop() {
             .then(answer => {
                 setGenres(answer.genres)
                 setIsLoadingGenres(false)
-
             })
         },
         []
     )
 
-        let list =[];
+    let list = [];
 
-        if (isLoadingMovies === false && isLoadingGenres === false) {
-            for (let index = 0; index < 6; index++) {
-                const movie = movies[index];
-    
-                let newArrayGenres = []
-    
-                movie.genre_ids.map((id) => {
+    if (isLoadingMovies === false && isLoadingGenres === false) {
+       for (let index = 0; index < 6; index++) {
+            const movie = movies[index];
+            let newArrayGenres = []
+            movie.genre_ids.map((id) => {
                     newArrayGenres.push(
                         ...genres.filter((genre)=>{
-                        return genre.id === id
+                            return genre.id === id
                         })
                     )
-                })        
-               
-    
-                list.push(
-                    <ViewListCard 
-                        key={movie.id}
-                        title={movie.title} 
-                        image={movie.poster_path} 
-                        genres={newArrayGenres} 
-                        voteAverage={movie.vote_average} 
-                        voteCount={movie.vote_count}
-                    />
-                )
-            }
-    
+            })
+            list.push(
+                <ViewListCard 
+                    key={movie.id}
+                    title={movie.title} 
+                    image={movie.poster_path} 
+                    genres={newArrayGenres} 
+                    voteAverage={movie.vote_average} 
+                    voteCount={movie.vote_count}
+                />
+            )
         }
-        
+    }
+
     if (isLoadingMovies || isLoadingGenres) {
         return(<div>Загружается...</div>)
     }
@@ -74,13 +67,10 @@ export default function MovieTop() {
                 <h2 className="text-5xl">Top Movies</h2>
                 <NavLink className="text-yellow-300" to={'/movies'}>View More</NavLink>
             </div>
-
-            <div className="grid grid-cols-3 justify-items-center gap-4">
-            {list}
+            <div className="grid grid-cols-3 gap-4 justify-items-center">
+                {list}
             </div>
-
-        </div>        
-          
+            
+        </div>
     )
-      
-} 
+}

@@ -16,8 +16,8 @@ export default function Poster() {
     useEffect(() => {
         const liveTimeMovies = localStorage.getItem("popularTimestamp");
         const fetchData = () => {
-            // fetch("https://api.themoviedb.org/3/movie/popular?api_key=46b3d80e68c3305b185dc8a255c58fac&language=ru-RU&page=1")
-            fetch("https://api.themoviedb.org/3/movie/upcoming?api_key=46b3d80e68c3305b185dc8a255c58fac&language=ru-RU&page=1")
+            // fetch("https://api.themoviedb.org/3/movie/popular?api_key=46b3d80e68c3305b185dc8a255c58fac&language=en-US&page=1")
+            fetch("https://api.themoviedb.org/3/movie/upcoming?api_key=46b3d80e68c3305b185dc8a255c58fac&language=en-US&page=1")
             .then(res => res.json())
             .then(
                 (answer) => {

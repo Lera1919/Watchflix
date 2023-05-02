@@ -6,7 +6,6 @@ export default function TVShowTop() {
 
     const [tvShow, setTVShow] = useState([])
     const [genres, setGenres] = useState([])
-
     const [isLoadingTVShow, setIsLoadingTVShow] = useState(true)
     const [isLoadingGenres, setIsLoadingGenres] = useState(true)
 
@@ -27,43 +26,38 @@ export default function TVShowTop() {
             .then(answer => {
                 setGenres(answer.genres)
                 setIsLoadingGenres(false)
-
             })
         },
         []
     )
 
-        let list =[];
+    let list = [];
 
-        if (isLoadingTVShow === false && isLoadingGenres === false) {
-            for (let index = 0; index < 6; index++) {
-                const tvshow = tvShow[index];
-    
-                let newArrayGenres = []
-    
-                tvshow.genre_ids.map((id) => {
-                    newArrayGenres.push(
-                        ...genres.filter((genre)=>{
+    if (isLoadingTVShow === false && isLoadingGenres === false) {
+ 
+       for (let index = 0; index < 6; index++) {
+            const tvshow = tvShow[index];
+            let newArrayGenres = []
+            tvshow.genre_ids.map((id) => {
+                newArrayGenres.push(
+                    ...genres.filter((genre)=>{
                         return genre.id === id
-                        })
-                    )
-                })        
-               
-    
-                list.push(
-                    <ViewListCard 
-                        key={tvshow.id}
-                        title={tvshow.name} 
-                        image={tvshow.poster_path} 
-                        genres={newArrayGenres} 
-                        voteAverage={tvshow.vote_average} 
-                        voteCount={tvshow.vote_count}
-                    />
+                    })
                 )
-            }
-    
+            })
+            list.push(
+                <ViewListCard 
+                    key={tvshow.id}
+                    title={tvshow.name} 
+                    image={tvshow.poster_path} 
+                    genres={newArrayGenres} 
+                    voteAverage={tvshow.vote_average} 
+                    voteCount={tvshow.vote_count}
+                />
+            )
         }
-        
+    }
+
     if (isLoadingTVShow || isLoadingGenres) {
         return(<div>Загружается...</div>)
     }
@@ -74,13 +68,9 @@ export default function TVShowTop() {
                 <h2 className="text-5xl">Top TV Show</h2>
                 <NavLink className="text-yellow-300" to={'/tv-show'}>View More</NavLink>
             </div>
-
-            <div className="grid grid-cols-3 justify-items-center gap-4">
-            {list}
+            <div className="grid grid-cols-3 gap-4 justify-items-center">
+                {list}
             </div>
-
-        </div>        
-          
+        </div>
     )
-      
-} 
+}
