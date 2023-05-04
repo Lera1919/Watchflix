@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PlayIcon, VideoCameraSlashIcon } from '@heroicons/react/24/outline';
 import  YouTube from "react-youtube";
+import Episodes from "./Episodes";
 
 
 
@@ -98,6 +99,9 @@ if (typeof listTv[index] === 'object' &&
             {/* <div className="border-4 border-orange-500 h-[400px] p-10 flex">
                 <p>video</p>
             </div> */}
+            
+            
+            <Episodes id={listTv[index].id}/>
         </div>
 
 
