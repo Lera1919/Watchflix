@@ -1,89 +1,77 @@
-import EpisodeCard from "./EpisodeCard";
 import { useEffect, useState } from "react";
+import EpisodesCard from "./EpisodesCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
+import "swiper/css";
+import "swiper/css/navigation";
+
 export default function Episodes(props) {
 
-const [detail, setDetail] = useState({})  
-const [isLoading, setIsLoading] = useState(true)  
-const [numberSeason, setNumberSeason] = useState(1)  
-const {id} = props
-const url = 'https://api.themoviedb.org/3/tv/' + id + '?api_key=46b3d80e68c3305b185dc8a255c58fac&language=en-US'
+    const { id, season } = props
+    const [isLoading, setIsLoading] = useState(true)
+    const [arrayEpisodes, setArrayEpisodes] = useState([])
 
-useEffect(
-    () => {
-        fetch(url)
-            .then(response => response.json())
-            .then(answer => {
+    const url = `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=46b3d80e68c3305b185dc8a255c58fac&language=en-US`
+
+
+
+    useEffect(
+        () => {
+            fetch(url)
+                .then(response => response.json())
+                .then(answer => {
+                    setArrayEpisodes(answer.episodes)
+                    setIsLoading(false)
                 
-                setDetail(answer)
-                setIsLoading(false)
-            })
-    }, [])
-
+                })
+        }, [season])
 
     if (isLoading) {
-        return (<div>Загружается...</div>)
+        return <div>Loading...</div>
     }
 
-    let buttons = [];
 
-    if (isLoading === false ) {
-   
-    for (let index = 0; index < detail.number_of_seasons; index++) {
-                buttons.push(
-                     <SwiperSlide key={index} className="flex items-center justify-center text-center">
-                            <button onClick={()=> setNumberSeason(index+1)} className="bg-yellow-300 rounded-md px-2 py-1 text-black cursor-pointer">
-                             Season {index+1}
-                            </button> 
-                    </SwiperSlide>
-                            
-                                 
-                )}
-       
-            
-        }
-    
+    if (arrayEpisodes?.length < 1) {
+        return <div className="text-xl text-white">No information...</div>
+    }
 
     return (
-        <div className="mt-8">
-          <div className="flex gap-2">
-          <Swiper
-                            slidesPerView={8}
-                            spaceBetween={30}
-                            grabCursor={true}
-                            navigation={true}
-                            modules={[Navigation]}
-                            pagination={false}
-                            className="flex items-center justify-center"
-                            breakpoints={{
-                                320: {
-                                slidesPerView: 2,
-                                spaceBetween: 12,
-                                },
-                                640: {
-                                slidesPerView: 3,
-                                spaceBetween: 12,
-                                },
-                                1024: {
-                                slidesPerView: 4,
-                                spaceBetween: 16,
-                                },
-                                1336: {
-                                slidesPerView: 5,
-                                spaceBetween: 30,
-                                },
-                            }}
-                        > {buttons}
-                        </Swiper>
-           
-          </div>
-                <div className="flex items-center justify-around">
-                    <EpisodeCard id={id} season={numberSeason} episode={detail.number_of_episodes}/>
-                    {/* <EpisodeCard/>
-                    <EpisodeCard/> */}
-                </div>
-        </div>  
-    )
+        <Swiper
+            slidesPerView={3}
+            spaceBetween={30}
+            grabCursor={true}
+            navigation={true}
+            modules={[Navigation]}
+            pagination={false}
+            className="flex items-center justify-center mt-8"
+            breakpoints={{
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 12,
+                },
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 12,
+                },
+                1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 16,
+                },
+                1336: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            }}
+        >
+            {arrayEpisodes.map((episode, index) => {
+                return (
+                    <SwiperSlide key={index} className="flex items-center justify-center text-center">
+                        <EpisodesCard id={id} season={season} episode={index+1}/>
+                    </SwiperSlide>
+                )
+            })}
+        </Swiper>
+
+    );
 }
