@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import { createRoot } from 'react-dom/client';
 // import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+
 
 import Account from './Components/Account';
 import Header from './Blocs/Header';
